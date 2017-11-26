@@ -1,3 +1,13 @@
+#turn on a lamp when a motion on a sensor is detected. keep the lamp on for 10 minutes, then turn it off
+# works with mysensors.org sensors, at least
+
+# example appdaemon.yaml snippet:
+#kitchenlight:
+#  module: motionsensors
+#  class: MotionLights
+#  lamp: light.koket
+#  sensor: binary_sensor.motion_sensor_1_1
+
 
 import appdaemon.appapi as appapi
 
