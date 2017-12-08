@@ -27,6 +27,7 @@ class Motorvarmare(appapi.AppDaemon):
             
         if self.handlestop:
             self.cancel_timer(self.handlestop)
+            self.turnoff()
             
         self.handlestart = self.run_at(self.turnon, self.starttime)
         self.handlestop = self.run_at(self.turnoff, self.stoptime)
