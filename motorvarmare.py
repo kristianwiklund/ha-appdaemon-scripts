@@ -28,20 +28,24 @@ class Motorvarmare(appapi.AppDaemon):
         self.starttime = deadline - datetime.timedelta(minutes=self.offset)
         print("motorvärmare: setting timer to "+str(self.starttime))
         self.stoptime = deadline + datetime.timedelta(minutes=30)
+
+        # there is a bug here that we need to fix. Once the event has happened,
+        # we shut it down. That is not good.
         
         if self.handlestart:
             self.cancel_timer(self.handlestart)
             
-        if self.handlestop:
-            self.cancel_timer(self.handlestop)
-            self.turnoff()
+#        if self.handlestop:
+#            self.cancel_timer(self.handlestop)
+#            self.turn_off(self.switch)
             
         self.handlestart = self.run_at(self.turnon, self.starttime)
-        self.handlestop = self.run_at(self.turnoff, self.stoptime)
+
 
     def turnon(self, kwargs):
         self.turn_on(self.switch)
         self.handlestart = False
+        self.handlestop = self.run_at(self.turnoff, self.stoptime)
 
     def turnoff(self, kwargs):
         self.turn_off(self.switch)
