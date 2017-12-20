@@ -20,7 +20,8 @@ class Crossfeed(appapi.AppDaemon):
                         'sensor.kaminen_temperature':'home/temperature/kaminen',
                         'binary_sensor.motion_sensor_1_1':'home/motion/koket',
                         'binary_sensor.motion_sensor_2_2':'home/motion/hall_uppe',
-                        'binary_sensor.motion_sensor_3_3':'home/motion/hall_nere'
+                        'binary_sensor.motion_sensor_3_3':'home/motion/hall_nere',
+                        'sensor.temperatureandhumidity_5_1':'home/temperature/datan'
         }
     
         for key in self.sensors:
@@ -28,8 +29,8 @@ class Crossfeed(appapi.AppDaemon):
 
 
     def pubstate(self, entity, attribute, old, new, kwargs):	
-#        print ("sending mqtt crossfeed for "+entity)
+
         t = {"value":self.get_state(entity), "timestamp":time.time(), "date":time.strftime("%Y-%m-%d"), "time":time.strftime("%H:%M")}
-#        print(t)
-        
+        #        print(t)
+        print ("mqtt: "+entity+"="+str(t))        
         self.call_service("mqtt/publish",topic=self.sensors[entity], payload=json.dumps(t,separators=(',', ':')), retain=1)

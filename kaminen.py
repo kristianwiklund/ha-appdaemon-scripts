@@ -8,7 +8,7 @@ class Kaminflakt(appapi.AppDaemon):
         self.state = "baff"
         self.handle = self.run_in(self.check_temperature, 1)
         self.state = self.get_state("switch.kaminflakten")
-        log ("Kaminfläkten is "+str(self.state))
+#        log ("Kaminfläkten is "+str(self.state))
 
     def check_temperature(self,kwargs):
         self.handle = self.run_in(self.check_temperature,60)
