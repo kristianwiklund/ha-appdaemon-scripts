@@ -14,7 +14,8 @@ import time
 #    offset: 120
 #    switch: switch.motorvarmare
     
-
+# bug: if the calendar is changed to make the start time be before the current wall clock time, it fails
+# need to add code to start the heater in that case instead of setting a timer to start the heater
 
 class Motorvarmare(appapi.AppDaemon):
     
@@ -29,8 +30,6 @@ class Motorvarmare(appapi.AppDaemon):
         print("motorvärmare: setting timer to "+str(self.starttime))
         self.stoptime = deadline + datetime.timedelta(minutes=30)
 
-        # there is a bug here that we need to fix. Once the event has happened,
-        # we shut it down. That is not good.
         
         if self.handlestart:
             self.cancel_timer(self.handlestart)
