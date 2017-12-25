@@ -13,7 +13,8 @@ class Crossfeed(appapi.AppDaemon):
     
         self.sensors = {'sensor.temperature_sensor_4_0':'home/temperature/pilsnerkranarna',
                         'sensor.utomhus_temperature':'home/temperature/utomhus',
-                        'sensor.inomhusuppe_temperature':'home/temperature/inomhusuppe',
+                        'sensor.biblioteket_temperature':'home/temperature/biblioteket',
+                        'sensor.utomhusuppe_temperature':'home/temperature/utomhusuppe',
                         'sensor.kabelsensor_temperature':'home/temperature/kabelsensor',
                         'sensor.lime_temperature':'home/temperature/lime',
                         'sensor.chili_temperature':'home/temperature/chili',
@@ -21,6 +22,7 @@ class Crossfeed(appapi.AppDaemon):
                         'binary_sensor.motion_sensor_1_1':'home/motion/koket',
                         'binary_sensor.motion_sensor_2_2':'home/motion/hall_uppe',
                         'binary_sensor.motion_sensor_3_3':'home/motion/hall_nere',
+                        'sensor.nut_ups_input_voltage':'home/mains/voltage',
                         'sensor.temperatureandhumidity_5_1':'home/temperature/datan'
         }
     

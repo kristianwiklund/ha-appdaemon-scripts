@@ -25,6 +25,7 @@ class MotionLights(appapi.AppDaemon):
             
     def motion(self, entity, attribute, old, new, kwargs):
         if not self.on:
+            # if time of day > 22.00 set brightness to reduced
             self.turn_on(self.lamp)
             self.on = True
 #            self.log(self.lamp+": On")
