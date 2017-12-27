@@ -24,13 +24,15 @@ class Octoprint(appapi.AppDaemon):
         self.printerstate = self.get_state(self.sensor)
 
         if self.printerstate == "Offline":
-            self.turn_off(self.lamp)
-            self.on = False
-            print(self.lamp+": Lamp off")
+            if self.on:
+                self.turn_off(self.lamp)
+                self.on = False
+                print(self.lamp+": Lamp off")
         else:
-            self.turn_on(self.lamp)
-            self.on = True
-            print(self.lamp+": Lamp on")
+            if not self.on:
+                self.turn_on(self.lamp)
+                self.on = True
+                print(self.lamp+": Lamp on")
 
 
     def handlepsu(self, entity, attribute, old, new, kwargs):	
