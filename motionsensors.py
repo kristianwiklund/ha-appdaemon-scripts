@@ -20,24 +20,26 @@ class MotionLights(appapi.AppDaemon):
     def initialize(self):
         self.lamp = self.args["lamp"]
         self.sensor = self.args["sensor"]
-        print(self.lamp+": controlled by sensor "+self.sensor)
+        self.timeout = int(self.args["timeout"])*60
+        print(self.lamp+": controlled by sensor "+self.sensor + " timeout :"+str(self.timeout/60)+" minutes")
         self.listen_state(self.motion, self.sensor, new = "on")
             
     def motion(self, entity, attribute, old, new, kwargs):
+        print ("tjillevipp")
         if not self.on:
             # if time of day > 22.00 set brightness to reduced
             self.turn_on(self.lamp)
             self.on = True
-#            self.log(self.lamp+": On")
+            self.log(self.lamp+": On")
         else:
             self.cancel_timer(self.handle)
             
-        self.handle = self.run_in(self.light_off, 600)
+        self.handle = self.run_in(self.light_off, timeout)
 
             
     def light_off(self,kwargs):
         self.turn_off(self.lamp)
         self.on = False
-#        self.log(self.lamp+": Off")
-
+        self.log(self.lamp+": Off")
+ 
 
