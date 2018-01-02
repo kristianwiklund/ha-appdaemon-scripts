@@ -6,6 +6,7 @@
 #  module: motionsensors
 #  class: MotionLights
 #  lamp: light.koket
+#  timeout: 10
 #  sensor: binary_sensor.motion_sensor_1_1
 
 
@@ -25,7 +26,7 @@ class MotionLights(appapi.AppDaemon):
         self.listen_state(self.motion, self.sensor, new = "on")
             
     def motion(self, entity, attribute, old, new, kwargs):
-        print ("tjillevipp")
+#        print ("tjillevipp " + self.sensor)
         if not self.on:
             # if time of day > 22.00 set brightness to reduced
             self.turn_on(self.lamp)
@@ -34,7 +35,7 @@ class MotionLights(appapi.AppDaemon):
         else:
             self.cancel_timer(self.handle)
             
-        self.handle = self.run_in(self.light_off, timeout)
+        self.handle = self.run_in(self.light_off, self.timeout)
 
             
     def light_off(self,kwargs):
