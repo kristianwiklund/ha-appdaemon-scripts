@@ -42,6 +42,7 @@ class Octoprint(appapi.AppDaemon):
     def poweron(self, entity, attribute, old, new, kwargs):	
         print("I got the powah!")
         self.turn_off(self.powerbutton)
+
         if not self.psuon:
             self.turn_on(self.psu)
             self.turn_on(self.lamp)
@@ -54,11 +55,13 @@ class Octoprint(appapi.AppDaemon):
         if self.psucommand == "off":
             self.turn_off(self.psu)
             self.turn_off(self.lamp)
+            self.turn_off(self.rgblamp)
             self.psuon = False
             print(self.psu+": Power off")
         else:
             self.turn_on(self.psu)
             self.turn_on(self.lamp)
+            self.turn_on(self.rgblamp)
             self.psuon = True
             print(self.psu+": Power on")
 
