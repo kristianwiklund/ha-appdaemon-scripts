@@ -1,4 +1,5 @@
 
+
 import appdaemon.appapi as appapi
 
 class Octoprint(appapi.AppDaemon):
@@ -11,14 +12,18 @@ class Octoprint(appapi.AppDaemon):
     psusensor = ""
     
     def initialize(self):
-        self.lamp = self.args["lamp"]
         self.psu = self.args["psu"]        
-        self.sensor = self.args["sensor"]
+        self.rgblamp = self.args["rgblamp"]
+        self.lamp = self.args["lamp"]
+        self.powerbutton = self.args["powerbutton"]
         self.psusensor = self.args["psusensor"]
-#        print(self.lamp+": controlled by printer "+self.sensor)
+        print ("octoprint: listening to "+self.powerbutton+" and "+self.psusensor)
+        print(self.psu+": controlled by switch "+self.sensor)
         print(self.psu+": controlled by "+self.psusensor)
 #        self.listen_state(self.handlelamp, self.sensor)
         self.listen_state(self.handlepsu, self.psusensor)
+        self.listen_state(self.poweron, self.powerbutton, new="on")
+
         
 #    def handlelamp(self, entity, attribute, old, new, kwargs):	
 #        self.printerstate = self.get_state(self.sensor)
@@ -34,7 +39,15 @@ class Octoprint(appapi.AppDaemon):
             #    self.on = True
             #    print(self.lamp+": Lamp on")
 
-
+    def poweron(self, entity, attribute, old, new, kwargs):	
+        print("I got the powah!")
+        self.turn_off(self.powerbutton)
+        if not self.psuon:
+            self.turn_on(self.psu)
+            self.turn_on(self.lamp)
+            self.turn_on(self.rgblamp)
+            self.psuon = True
+            
     def handlepsu(self, entity, attribute, old, new, kwargs):	
         self.psucommand = self.get_state(self.psusensor)
         print (">"+self.psucommand+"<")

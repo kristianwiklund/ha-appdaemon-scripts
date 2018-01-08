@@ -26,7 +26,7 @@ class MotionLights(appapi.AppDaemon):
         self.listen_state(self.motion, self.sensor, new = "on")
             
     def motion(self, entity, attribute, old, new, kwargs):
-#        print ("tjillevipp " + self.sensor)
+        print ("tjillevipp " + self.sensor)
         if not self.on:
             # if time of day > 22.00 set brightness to reduced
             self.turn_on(self.lamp)
